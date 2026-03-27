@@ -1,0 +1,41 @@
+################################################################################
+# Keil MDK / ARMCC / ARMGCC STM32 项目 .gitignore
+################################################################################
+
+# 编译输出（不用上传）
+*.axf
+*.elf
+*.hex
+
+# 中间文件
+*.o
+*.d
+*.crf
+*.dep
+*.lnp
+*.map
+*.lst
+
+# Keil 输出目录
+Objects/
+Listings/
+JLinkLog.txt
+
+# Keil 用户界面缓存
+*.uvguix.*
+
+# STM32CubeIDE / Eclipse 缓存
+.settings/
+.metadata/
+Debug/
+Release/
+*.launch
+
+# VSCode 临时文件（如果用了）
+.vscode/
+
+# 系统文件
+Thumbs.db
+*.bak
+*.tmp
+~$*
