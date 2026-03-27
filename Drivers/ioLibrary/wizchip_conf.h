@@ -59,6 +59,9 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include "debug_uart.h"
+
+void wizchip_delay(uint32_t ms);
 /**
     @brief Select WIZCHIP.
     @todo You should select one, \b W5100, \b W5100S, \b W5200, \b W5300, \b W5500 or etc. \n\n

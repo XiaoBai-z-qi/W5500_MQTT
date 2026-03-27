@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "debug_uart.h"
+#include "wizchip_port.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,14 +116,11 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  int id = (int)argument;
+  W5500_Init();
   /* Infinite loop */
   for(;;)
   {
-    for (int i = 0; i < 50; i++) {
-        UART_Print("[T%d] Message %d\r\n", id, i);
-    }
-    vTaskDelay(pdMS_TO_TICKS(100));
+    
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -134,6 +132,9 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
     Debug_UART_Callback(huart);
 }
 
-
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+  W5500_TxRxCpltCallback(hspi);
+}
 /* USER CODE END Application */
 

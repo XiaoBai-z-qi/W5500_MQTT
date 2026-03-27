@@ -10,6 +10,6 @@
 
 
 int W5500_Init(void);
-
+void W5500_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 
 #endif /* INC_WIZCHIP_PORT_H_ */

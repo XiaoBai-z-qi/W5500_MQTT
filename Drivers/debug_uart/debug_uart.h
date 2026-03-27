@@ -4,10 +4,20 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "main.h"  // 添加以获取UART_HandleTypeDef定义
+#include <stdint.h>
 
 #define UART_TX_BUF_SIZE    1024  // 必须是2的幂
 
 //xTaskCreate(UART_Debug_Task, "UART_Debug_Task", 256, NULL, configMAX_PRIORITIES - 1, NULL);
+#define OPEN_DEBUG_UART 1
+#if OPEN_DEBUG_UART
+    #define Debug_Printf(fmt, ...)  UART_Print(fmt, ##__VA_ARGS__)
+    #define Debug_Print_ISR(str)    UART_Print_ISR(str)
+#else
+    #define Debug_Printf(fmt, ...)  ((void)0)  
+    #define Debug_Print_ISR(str)    ((void)0)
+#endif
+
 
 void UART_Debug_Init(UART_HandleTypeDef *huart);
 int UART_Print(const char *fmt, ...);

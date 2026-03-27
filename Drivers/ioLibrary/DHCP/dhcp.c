@@ -464,7 +464,7 @@ void send_DHCP_DISCOVER(void) {
     ip[3] = 255;
 
 #ifdef _DHCP_DEBUG_
-    printf("> Send DHCP_DISCOVER\r\n");
+    Debug_Printf("> Send DHCP_DISCOVER\r\n");
 #endif
 
 #if 1
@@ -569,7 +569,7 @@ void send_DHCP_REQUEST(void) {
     }
 
 #ifdef _DHCP_DEBUG_
-    printf("> Send DHCP_REQUEST\r\n");
+    Debug_Printf("> Send DHCP_REQUEST\r\n");
 #endif
 
 #if 1
@@ -640,7 +640,7 @@ void send_DHCP_DECLINE(void) {
     ip[3] = 0xFF;
 
 #ifdef _DHCP_DEBUG_
-    printf("\r\n> Send DHCP_DECLINE\r\n");
+    Debug_Printf("\r\n> Send DHCP_DECLINE\r\n");
 #endif
 
 #if 1
@@ -682,7 +682,7 @@ int8_t parseDHCPMSG(void) {
         len = recvfrom(DHCP_SOCKET, (uint8_t *)pDHCPMSG, len, svr_addr, &svr_port);
 #endif
 #ifdef _DHCP_DEBUG_
-        printf("DHCP message : %d.%d.%d.%d(%d) %d received. \r\n", svr_addr[0], svr_addr[1], svr_addr[2], svr_addr[3], svr_port, len);
+        Debug_Printf("DHCP message : %d.%d.%d.%d(%d) %d received. \r\n", svr_addr[0], svr_addr[1], svr_addr[2], svr_addr[3], svr_port, len);
 #endif
     } else {
         return 0;
@@ -693,7 +693,7 @@ int8_t parseDHCPMSG(void) {
                 (pDHCPMSG->chaddr[2] != DHCP_CHADDR[2]) || (pDHCPMSG->chaddr[3] != DHCP_CHADDR[3]) ||
                 (pDHCPMSG->chaddr[4] != DHCP_CHADDR[4]) || (pDHCPMSG->chaddr[5] != DHCP_CHADDR[5])) {
 #ifdef _DHCP_DEBUG_
-            printf("No My DHCP Message. This message is ignored.\r\n");
+            Debug_Printf("No My DHCP Message. This message is ignored.\r\n");
 #endif
             return 0;
         }
@@ -702,7 +702,7 @@ int8_t parseDHCPMSG(void) {
             if (((svr_addr[0] != DHCP_SIP[0]) || (svr_addr[1] != DHCP_SIP[1]) || (svr_addr[2] != DHCP_SIP[2]) || (svr_addr[3] != DHCP_SIP[3])) &&
                     ((svr_addr[0] != DHCP_REAL_SIP[0]) || (svr_addr[1] != DHCP_REAL_SIP[1]) || (svr_addr[2] != DHCP_REAL_SIP[2]) || (svr_addr[3] != DHCP_REAL_SIP[3]))) {
 #ifdef _DHCP_DEBUG_
-                printf("Another DHCP sever send a response message. This is ignored.\r\n");
+                Debug_Printf("Another DHCP sever send a response message. This is ignored.\r\n");
 #endif
                 return 0;
             }
@@ -813,7 +813,7 @@ uint8_t DHCP_run(void) {
     case STATE_DHCP_DISCOVER :
         if (type == DHCP_OFFER) {
 #ifdef _DHCP_DEBUG_
-            printf("> Receive DHCP_OFFER\r\n");
+            Debug_Printf("> Receive DHCP_OFFER\r\n");
 #endif
             DHCP_allocated_ip[0] = pDHCPMSG->yiaddr[0];
             DHCP_allocated_ip[1] = pDHCPMSG->yiaddr[1];
@@ -831,7 +831,7 @@ uint8_t DHCP_run(void) {
         if (type == DHCP_ACK) {
 
 #ifdef _DHCP_DEBUG_
-            printf("> Receive DHCP_ACK\r\n");
+            Debug_Printf("> Receive DHCP_ACK\r\n");
 #endif
             if (check_DHCP_leasedIP()) {
                 // Network info assignment from DHCP
@@ -848,7 +848,7 @@ uint8_t DHCP_run(void) {
         } else if (type == DHCP_NAK) {
 
 #ifdef _DHCP_DEBUG_
-            printf("> Receive DHCP_NACK\r\n");
+            Debug_Printf("> Receive DHCP_NACK\r\n");
 #endif
 
             reset_DHCP_timeout();
@@ -864,7 +864,7 @@ uint8_t DHCP_run(void) {
         if ((dhcp_lease_time != INFINITE_LEASETIME) && ((dhcp_lease_time / 2) < dhcp_tick_1s)) {
 
 #ifdef _DHCP_DEBUG_
-            printf("> Maintains the IP address \r\n");
+            Debug_Printf("> Maintains the IP address \r\n");
 #endif
 
             type = 0;
@@ -894,13 +894,13 @@ uint8_t DHCP_run(void) {
                 ret = DHCP_IP_CHANGED;
                 dhcp_ip_update();
 #ifdef _DHCP_DEBUG_
-                printf(">IP changed.\r\n");
+                Debug_Printf(">IP changed.\r\n");
 #endif
 
             }
 #ifdef _DHCP_DEBUG_
             else {
-                printf(">IP is continued.\r\n");
+                Debug_Printf(">IP is continued.\r\n");
             }
 #endif
             reset_DHCP_timeout();
@@ -908,7 +908,7 @@ uint8_t DHCP_run(void) {
         } else if (type == DHCP_NAK) {
 
 #ifdef _DHCP_DEBUG_
-            printf("> Receive DHCP_NACK, Failed to maintain ip\r\n");
+            Debug_Printf("> Receive DHCP_NACK, Failed to maintain ip\r\n");
 #endif
 
             reset_DHCP_timeout();
@@ -938,18 +938,18 @@ uint8_t check_DHCP_timeout(void) {
 
             switch (dhcp_state) {
             case STATE_DHCP_DISCOVER :
-                //					printf("<<timeout>> state : STATE_DHCP_DISCOVER\r\n");
+                //					Debug_Printf("<<timeout>> state : STATE_DHCP_DISCOVER\r\n");
                 send_DHCP_DISCOVER();
                 break;
 
             case STATE_DHCP_REQUEST :
-                //					printf("<<timeout>> state : STATE_DHCP_REQUEST\r\n");
+                //					Debug_Printf("<<timeout>> state : STATE_DHCP_REQUEST\r\n");
 
                 send_DHCP_REQUEST();
                 break;
 
             case STATE_DHCP_REREQUEST :
-                //					printf("<<timeout>> state : STATE_DHCP_REREQUEST\r\n");
+                //					Debug_Printf("<<timeout>> state : STATE_DHCP_REREQUEST\r\n");
 
                 send_DHCP_REQUEST();
                 break;
@@ -1010,7 +1010,7 @@ int8_t check_DHCP_leasedIP(void) {
         // UDP send Timeout occurred : allocated IP address is unique, DHCP Success
 
 #ifdef _DHCP_DEBUG_
-        printf("\r\n> Check leased IP - OK\r\n");
+        Debug_Printf("\r\n> Check leased IP - OK\r\n");
 #endif
 
         return 1;

@@ -53,6 +53,12 @@
 //
 
 #include "wizchip_conf.h"
+#include "FreeRTOS.h"
+#include "task.h"
+void wizchip_delay(uint32_t ms)
+{
+	vTaskDelay(pdMS_TO_TICKS(ms));
+}
 
 /////////////
 //M20150401 : Remove ; in the default callback function such as wizchip_cris_enter(), wizchip_cs_select() and etc.
