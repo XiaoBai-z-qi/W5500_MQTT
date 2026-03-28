@@ -475,6 +475,7 @@ static int8_t connect_IO_6(uint8_t sn, uint8_t * addr, uint16_t port, uint8_t ad
         return SOCK_BUSY;
     }
     while (getSn_SR(sn) != SOCK_ESTABLISHED) {
+		vTaskDelay(20);
         if (getSn_IR(sn) & Sn_IR_TIMEOUT) {
             setSn_IR(sn, Sn_IR_TIMEOUT);
             return SOCKERR_TIMEOUT;

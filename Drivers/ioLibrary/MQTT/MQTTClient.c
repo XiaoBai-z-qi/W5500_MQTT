@@ -14,6 +14,8 @@
       Allan Stockdill-Mander/Ian Craggs - initial API and implementation and/or initial documentation
  *******************************************************************************/
 #include "MQTTClient.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 static void NewMessageData(MessageData* md, MQTTString* aTopicName, MQTTMessage* aMessage) {
     md->topicName = aTopicName;
@@ -327,6 +329,7 @@ int waitfor(MQTTClient* c, int packet_type, Timer* timer) {
         if (TimerIsExpired(timer)) {
             break;    // we timed out
         }
+		vTaskDelay(10);
     } while ((rc = cycle(c, timer)) != packet_type);
 
     return rc;

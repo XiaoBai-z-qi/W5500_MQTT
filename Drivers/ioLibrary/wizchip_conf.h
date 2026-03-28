@@ -67,6 +67,7 @@ void wizchip_delay(uint32_t ms);
     @todo You should select one, \b W5100, \b W5100S, \b W5200, \b W5300, \b W5500 or etc. \n\n
          ex> <code> #define \_WIZCHIP_      W5500 </code>
 */
+#define _DNS_DEBUG_
 #define _WIZCHIP_                   W5500
 #define W5100						5100
 #define W5100S						5100+5

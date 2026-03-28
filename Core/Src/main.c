@@ -60,7 +60,8 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern void DNS_time_handler(void);
+extern void MilliTimer_Handler(void);
 /* USER CODE END 0 */
 
 /**
@@ -190,7 +191,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+  if(htim == &htim10)
+  {
+    static uint32_t timer_1s = 0;
+    MilliTimer_Handler();
+    timer_1s++;
+    if(timer_1s >= 1000)
+    {
+      timer_1s = 0;
+      DNS_time_handler();
+    }
+  }
   /* USER CODE END Callback 1 */
 }
 

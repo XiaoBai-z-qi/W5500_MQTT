@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "debug_uart.h"
 #include "wizchip_port.h"
+#include "mqtt_driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +59,21 @@ const osThreadAttr_t defaultTask_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-
+extern MQTTClient hclient1;
+void test_task(void *argument)
+{
+  char payload1[100];
+  int value = 10;
+  while(1)
+  {
+      if(ONENET_MQTTPublish(&hclient1, pubtopic, payload1) == 0)
+      {
+        sprintf(payload1, "{\"id\":\"123\",\"version\":\"1.0\",\"params\":{\"test\":{\"value\":%d}}}", value);
+        value += 5;
+      }
+      vTaskDelay(5000);
+  }
+}
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -98,6 +113,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   xTaskCreate(UART_Debug_Task, "UART_Debug_Task", 256, NULL, configMAX_PRIORITIES - 1, NULL);
+  xTaskCreate(test_task, "test_task", 512, NULL, osPriorityNormal, NULL);
+  xTaskCreate(ONENET_MQTT_Task, "ONENET_MQTT_Task", 512, NULL, osPriorityAboveNormal, NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -116,11 +133,12 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  W5500_Init();
+  
   /* Infinite loop */
   for(;;)
   {
-    
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
+    vTaskDelay(5);
   }
   /* USER CODE END StartDefaultTask */
 }
