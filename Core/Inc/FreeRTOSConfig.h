@@ -44,6 +44,7 @@
  *----------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
+#include "monitor_task.h"
 /* Section where include file can be added */
 /* USER CODE END Includes */
 

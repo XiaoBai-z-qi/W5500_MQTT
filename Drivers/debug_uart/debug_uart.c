@@ -5,7 +5,7 @@
 
 /* ================= 配置 ================= */
 #define UART_TX_BUF_SIZE 1024   // 必须是2的幂
-#define UART_DMA_MAX_LEN 256
+#define UART_DMA_MAX_LEN 512
 
 /* ================= 结构体 ================= */
 typedef struct {

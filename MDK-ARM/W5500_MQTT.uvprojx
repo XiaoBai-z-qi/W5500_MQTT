@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F411xE</Define>
+              <Define>USE_HAL_DRIVER,STM32F411xE,configUSE_STATS_FORMATTING_FUNCTIONS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/debug_uart;../Drivers/Handware;../Drivers/ioLibrary;../Drivers/ioLibrary/DHCP;../Drivers/ioLibrary/DNS;../Drivers/ioLibrary/MQTT;../Drivers/ioLibrary/MQTT/MQTTPacket/src;../Drivers/ioLibrary/W5500</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/debug_uart;../Drivers/Handware;../Drivers/ioLibrary;../Drivers/ioLibrary/DHCP;../Drivers/ioLibrary/DNS;../Drivers/ioLibrary/MQTT;../Drivers/ioLibrary/MQTT/MQTTPacket/src;../Drivers/ioLibrary/W5500;..\Drivers\Handware\Task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1792,6 +1792,16 @@
               <FileName>wizchip_port.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\Handware\wizchip_port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Handware/Task</GroupName>
+          <Files>
+            <File>
+              <FileName>monitor_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Handware\Task\monitor_task.c</FilePath>
             </File>
           </Files>
         </Group>

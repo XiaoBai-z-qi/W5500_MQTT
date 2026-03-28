@@ -28,6 +28,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "debug_uart.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,6 +98,7 @@ int main(void)
   MX_TIM10_Init();
   MX_USART1_UART_Init();
   MX_SPI1_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
   if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) != GPIO_PIN_RESET)
 	  while(1);
