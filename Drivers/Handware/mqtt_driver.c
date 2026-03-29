@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "debug_uart.h"
 #include "wizchip_port.h"
+#include "jsmn_port.h"
 
 #define ONENET_MQTT_VERSION     4
 
@@ -54,7 +55,7 @@ int ONENET_MQTTConnent(MQTTClient *client, Network *net)
 
     /* 初始化 MQTT 客户端 */
     MQTTClientInit( client, net,
-                    30000,                          //命令超时 (ms)
+                    5000,                          //命令超时 (ms)
                     mqtt_sendbuf, MQTT_BUF_SIZE,
                     mqtt_readbuf, MQTT_BUF_SIZE);
 
@@ -128,27 +129,17 @@ void ONENET_MQTTYield(MQTTClient *client, uint32_t timeout_ms)
  * -------------------------------------------------------------- */
 __weak void onenet_property_set_callback(const char *payload, int payload_len)
 {
-	char buf[256];
-    if (payload_len >= sizeof(buf)) payload_len = sizeof(buf) - 1;
-    memcpy(buf, payload, payload_len);
-    buf[payload_len] = '\0';
-
-    Debug_Printf("[OneNET] Property Set Received: %s\r\n", buf);
-
-    int id_num = 0;
-    char *p = strstr(buf, "\"id\"");
-    if (p) {
-        p = strchr(p, ':'); // 找到冒号
-        if (p) {
-            p++; // 跳过冒号
-            while(*p == ' ' || *p == '\"') p++; // 跳过空格和引号
-            id_num = atoi(p);
-        }
-    }
-
+    int ret, id_num;
     char response[128];
-    snprintf(response, sizeof(response), "{\"id\":\"%d\",\"code\":\"200\",\"msg\":\"success\"}", id_num);
-	Debug_Printf(" %s\r\n", response);
+    Debug_Printf("[OneNET] Property Set Received: %s\r\n", payload);
+    jsmntok_t token[32];
+    ret = json_parse(payload, token, 32);
+    jsmntok_t *id_token = json_find_value(payload, token, ret, "id");
+    id_num = json_token_to_int(payload, id_token);
+    Debug_Printf("[OneNET] Property Set ID: %d\r\n", id_num);
+
+    json_printf(response, sizeof(response), "{\"id\":\"%d\",\"code\":\"200\",\"msg\":\"success\"}", id_num);
+    
     ONENET_MQTTPublish(&hclient1, replytopic, response);
 }
 

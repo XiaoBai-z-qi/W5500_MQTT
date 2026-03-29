@@ -17,7 +17,7 @@
 /* 设备信息配置 - 请根据实际设备修改 */
 #define ONENET_PRODUCT_ID           "druk"
 #define ONENET_DEVICE_NAME          "oK0brZsN6w"
-#define ONENET_ACCESS_TOKEN         "version=2018-10-31&res=products%2FoK0brZsN6w%2Fdevices%2Fdruk&et=1774788921&method=md5&sign=rxAt4SD33jb4q74gVPnePw%3D%3D"
+#define ONENET_ACCESS_TOKEN         "version=2018-10-31&res=products%2FoK0brZsN6w%2Fdevices%2Fdruk&et=1781963724&method=md5&sign=sGoxHtyQbDoZlykukEqd2w%3D%3D"
 
 #define pubtopic                    "$sys/oK0brZsN6w/druk/thing/property/post"
 #define subtopic 					"$sys/oK0brZsN6w/druk/thing/property/set"

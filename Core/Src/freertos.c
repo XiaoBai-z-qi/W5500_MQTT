@@ -116,7 +116,7 @@ void MX_FREERTOS_Init(void) {
   xTaskCreate(UART_Debug_Task, "UART_Debug_Task", 128, NULL, configMAX_PRIORITIES - 1, NULL);
   xTaskCreate(test_task, "test_task", 512, NULL, osPriorityNormal, NULL);
   xTaskCreate(ONENET_MQTT_Task, "ONENET_MQTT_Task", 512, NULL, osPriorityAboveNormal, NULL);
-  xTaskCreate(vMonitorTask, "vMonitorTask", 512, NULL, osPriorityBelowNormal, NULL);
+  //xTaskCreate(vMonitorTask, "vMonitorTask", 512, NULL, osPriorityBelowNormal, NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
